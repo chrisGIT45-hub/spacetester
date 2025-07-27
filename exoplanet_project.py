@@ -69,28 +69,25 @@ def get_font_as_base64(font_path):
 
 # --- Custom Styling and Background ---
 # --- FINAL CORRECTED Custom Styling and Background Function ---
+# --- FINAL v2: Custom Styling and Background Function ---
 def add_custom_styling(main_bg_path, sidebar_bg_path, title_font_path):
-    # This final version uses a more robust CSS selector to target the main background.
+    # This version restores the missing CSS for the custom font and sidebar glow.
 
     def get_image_data(file_path):
         """Reads an image file and returns its base64 string and mime type."""
         if not os.path.exists(file_path):
-            # This warning will now be the definitive source of truth if a file is not found.
-            st.warning(f"Cannot find asset: '{file_path}'. Please check the filename and path in your code and GitHub repo.")
+            st.warning(f"Cannot find asset: '{file_path}'. Please check the filename and path.")
             return None, None
 
         file_extension = os.path.splitext(file_path)[1].lower()
-        if file_extension == ".png":
-            mime_type = "image/png"
-        elif file_extension in [".jpg", ".jpeg"]:
-            mime_type = "image/jpeg"
+        if file_extension == ".png": mime_type = "image/png"
+        elif file_extension in [".jpg", ".jpeg"]: mime_type = "image/jpeg"
         else:
-            st.warning(f"Unsupported image type for background: {file_extension}")
+            st.warning(f"Unsupported image type: {file_extension}")
             return None, None
         
         try:
-            with open(file_path, "rb") as f:
-                data = f.read()
+            with open(file_path, "rb") as f: data = f.read()
             base64_str = base64.b64encode(data).decode()
             return base64_str, mime_type
         except Exception as e:
@@ -108,15 +105,10 @@ def add_custom_styling(main_bg_path, sidebar_bg_path, title_font_path):
             font-family: 'SpecialGothic';
             src: url(data:font/ttf;base64,{title_font_base64}) format('truetype');
         }}
-        h1, h2, h3, h4, h5, h6 {{
-            font-family: 'SpecialGothic', sans-serif;
-        }}
         """
 
     main_bg_css = ""
     if main_bg_base64:
-        # --- THE KEY CHANGE IS HERE ---
-        # We are now targeting the main app container directly, which is more robust.
         main_bg_css = f"""
         [data-testid="stAppViewContainer"] {{
             background-image: url("data:{main_mime_type};base64,{main_bg_base64}");
@@ -141,7 +133,41 @@ def add_custom_styling(main_bg_path, sidebar_bg_path, title_font_path):
         """
 
     # This combines all CSS rules into one block
-    custom_css = f"<style>{font_css}{main_bg_css}{sidebar_bg_css}</style>"
+    custom_css = f"""
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Exo+2:wght@400;700&display=swap');
+        {font_css}
+        html, body, [class*="css"] {{ font-family: 'Exo 2', sans-serif; }}
+        
+        /* --- FIX 1: RESTORED FONT --- */
+        h1, h2, h3, h4, h5, h6 {{ font-family: 'SpecialGothic', sans-serif; }}
+
+        [data-testid="stHeader"] {{ display: none; }}
+        {main_bg_css}
+        {sidebar_bg_css}
+        .main .block-container {{ background: none; }}
+        [data-testid="stAppViewContainer"] > .main .block-container * {{
+            color: #FFFFFF; text-shadow: 1px 1px 6px #000000;
+        }}
+
+        /* --- FIX 2: RESTORED SIDEBAR GLOW --- */
+        [data-testid="stSidebar"] {{
+            border-right: 1px solid rgba(125, 249, 255, 0.7);
+            box-shadow: 0 0 10px rgba(125, 249, 255, 0.5);
+        }}
+
+        .styled-container {{
+            padding: 1rem; border-radius: 10px; border: 1px solid rgba(125, 249, 255, 0.7);
+            box-shadow: 0 0 8px rgba(125, 249, 255, 0.5); background-color: rgba(30, 30, 50, 0.9); height: 100%;
+        }}
+        [data-testid="stDataFrame"] {{
+            padding: 1rem; border-radius: 10px; border: 1px solid rgba(125, 249, 255, 0.7);
+            box-shadow: 0 0 10px rgba(125, 249, 255, 0.5); background-color: rgba(30, 30, 50, 0.9);
+        }}
+        [data-testid="stDataFrame"] thead th {{ background-color: rgba(125, 249, 255, 0.2); color: white; }}
+        [data-testid="stDataFrame"] {{ border: none !important; }}
+    </style>
+    """
     st.markdown(custom_css, unsafe_allow_html=True)
 
 
