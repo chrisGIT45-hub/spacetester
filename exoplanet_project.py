@@ -31,13 +31,13 @@ TRANSIT_FILEPATH = "cleaned_transitplanet_data.zip"  # Note: corrected to lowerc
 KEPLER_FP_FILEPATH = "keplerfalsepostives.csv"
 
 # Asset files
-EXO_MAIN_BG = "solar-system-252023.png"
+EXO_MAIN_BG = "1.png"
 EXO_SIDEBAR_BG = "planets-solar-system-cosmic-in-s.jpg"
-METEOR_MAIN_BG = "asteroid-earth-space-hd-wallpaper-uhdpaper.com-510@0@f.jpg"
+METEOR_MAIN_BG = "2.png"
 METEOR_SIDEBAR_BG = "image_a67ddb.png"
-KEPLER_MAIN_BG = "kepler_main.jpg"
+KEPLER_MAIN_BG = "3.png"
 KEPLER_SIDEBAR_BG = "kepler_sidebar.jpg"
-TRANSIT_MAIN_BG = "transitbackground.png"
+TRANSIT_MAIN_BG = "4.png"
 # IMPORTANT: Make sure 'transitsidebar.png' exists in your GitHub repository!
 TRANSIT_SIDEBAR_BG = "transitsidebar.png"
 
