@@ -26,7 +26,7 @@ st.set_page_config(
 
 # Data files
 EXOPLANET_FILEPATH = "PS_2025.07.25_23.13.46.zip"
-METEORITE_FILEPATH = "Meteorite_Landings.csv"
+METEORITE_FILEPATH = "Meteorite_Landings.zip"
 TRANSIT_FILEPATH = "cleaned_transitplanet_data.zip"  # Note: corrected to lowercase 't'
 KEPLER_FP_FILEPATH = "keplerfalsepostives.csv"
 
