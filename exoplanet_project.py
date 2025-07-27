@@ -86,7 +86,7 @@ def add_custom_styling(main_bg_path, sidebar_bg_path, title_font_path):
             st.warning(f"Unsupported image type: {file_extension}")
             return None, None
         
-        try:
+        try:    
             with open(file_path, "rb") as f: data = f.read()
             base64_str = base64.b64encode(data).decode()
             return base64_str, mime_type
@@ -133,43 +133,33 @@ def add_custom_styling(main_bg_path, sidebar_bg_path, title_font_path):
         """
 
     # This combines all CSS rules into one block
+# ... inside your add_custom_styling function ...
+    
+    # This combines all CSS rules into one block
     custom_css = f"""
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Exo+2:wght@400;700&display=swap');
         {font_css}
         html, body, [class*="css"] {{ font-family: 'Exo 2', sans-serif; }}
         
-        /* --- FIX 1: RESTORED FONT --- */
         h1, h2, h3, h4, h5, h6 {{ font-family: 'SpecialGothic', sans-serif; }}
 
-        [data-testid="stHeader"] {{ display: none; }}
+        /* The problematic line has been removed from here */
+        
         {main_bg_css}
         {sidebar_bg_css}
         .main .block-container {{ background: none; }}
         [data-testid="stAppViewContainer"] > .main .block-container * {{
             color: #FFFFFF; text-shadow: 1px 1px 6px #000000;
         }}
-
-        /* --- FIX 2: RESTORED SIDEBAR GLOW --- */
         [data-testid="stSidebar"] {{
             border-right: 1px solid rgba(125, 249, 255, 0.7);
             box-shadow: 0 0 10px rgba(125, 249, 255, 0.5);
         }}
-
-        .styled-container {{
-            padding: 1rem; border-radius: 10px; border: 1px solid rgba(125, 249, 255, 0.7);
-            box-shadow: 0 0 8px rgba(125, 249, 255, 0.5); background-color: rgba(30, 30, 50, 0.9); height: 100%;
-        }}
-        [data-testid="stDataFrame"] {{
-            padding: 1rem; border-radius: 10px; border: 1px solid rgba(125, 249, 255, 0.7);
-            box-shadow: 0 0 10px rgba(125, 249, 255, 0.5); background-color: rgba(30, 30, 50, 0.9);
-        }}
-        [data-testid="stDataFrame"] thead th {{ background-color: rgba(125, 249, 255, 0.2); color: white; }}
-        [data-testid="stDataFrame"] {{ border: none !important; }}
+        /* ... rest of your css ... */
     </style>
     """
     st.markdown(custom_css, unsafe_allow_html=True)
-
 
 # --- DATA LOADING FUNCTIONS ---
 @st.cache_data
