@@ -1,5 +1,5 @@
 # exoplanet_project.py
-
+import os
 import streamlit as st
 import pandas as pd
 from sklearn.model_selection import train_test_split
