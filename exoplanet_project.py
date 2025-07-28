@@ -42,7 +42,7 @@ TRANSIT_MAIN_BG = "4.png"
 TRANSIT_SIDEBAR_BG = "transitsidebar.png"
 
 # Font file paths (Note the 'fonts/' subfolder)
-TITLE_FONT_PATH = "fonts/SpecialGothicExpandedOne-Regular.ttf"
+TITLE_FONT_PATH = "fonts/Aerospace.ttf"
 
 
 # --- Helper function to load a local image as Base64 ---
